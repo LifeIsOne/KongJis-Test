@@ -5,6 +5,8 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class BoardRepository {
@@ -21,6 +23,15 @@ public class BoardRepository {
         query.setParameter(3, username);
 
         query.executeUpdate();
+    }
+
+    public List<Board> selectAll(){
+        String q = """
+                SELECT * FROM board_tb
+                """;
+        Query query = em.createNativeQuery(q,Board.class);
+
+        return query.getResultList();
     }
 
 }
