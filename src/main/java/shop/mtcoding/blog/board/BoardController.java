@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.board;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Past;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class BoardController {
     // 세이브가 없네 만들어야징
     @PostMapping("/board/save")
     public String save(String title, String content, String username){
-        br.save(title,content, username);
+        br.save(title, content, username);
         return "redirect:/";
     }
 
@@ -47,5 +48,19 @@ public class BoardController {
         request.setAttribute("board",board);
 
         return "board/detail";
+    }
+
+    @PostMapping ("/board/{id}/update")
+    public String update(@PathVariable int id, String title, String content, String username){
+        br.updateBoard(id, title, content, username);
+        return "redirect:/board/"+id;
+    }
+
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable int id, HttpServletRequest request){
+        // 수정화기 화면에 띄어야 함
+        Board board = br.selectById(id);
+        request.setAttribute("board", board);
+        return "board/update-form";
     }
 }

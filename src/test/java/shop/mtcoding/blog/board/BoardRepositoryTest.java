@@ -29,4 +29,20 @@ public class BoardRepositoryTest {
         // then
 
     }
+
+    @Test
+    public void updateBoard_test(){
+        // given
+        int id = 1;
+        String title = "TITLE";
+        String content = "CONTENT";
+        String username = "USERNAME";
+
+        // when
+        br.updateBoard(id, title, content, username);
+
+        // then
+        Board board = br.selectById(id);
+        System.out.println(board);
+    }
 }

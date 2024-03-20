@@ -14,10 +14,11 @@ import java.util.List;
 public class BoardRepository {
     private final EntityManager em;
 
+    @Transactional
     public void save(String title, String content, String username){
         String q = """
                 INSERT INTO board_tb(title, content, username, created_at)
-                VALUES ( ?, ?, ?, now());
+                VALUES ( ?, ?, ?, now())
                 """;
         Query query = em.createNativeQuery(q);
         query.setParameter(1, title);
@@ -30,6 +31,7 @@ public class BoardRepository {
     public List<Board> selectAll(){
         String q = """
                 SELECT * FROM board_tb
+                ORDER BY id DESC
                 """;
         Query query = em.createNativeQuery(q, Board.class);
 
@@ -53,6 +55,22 @@ public class BoardRepository {
                 """;
         Query query = em.createNativeQuery(q);
         query.setParameter(1,id);
+
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void updateBoard(int id, String title, String content, String username){
+        String q = """
+                UPDATE board_tb
+                SET title = ?, content = ?, username = ?
+                WHERE id = ?
+                """;
+        Query query = em.createNativeQuery(q);
+        query.setParameter(1, title);
+        query.setParameter(2, content);
+        query.setParameter(3, username);
+        query.setParameter(4, id);
 
         query.executeUpdate();
     }
