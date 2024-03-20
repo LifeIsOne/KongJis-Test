@@ -2,6 +2,8 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.Transient;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -42,5 +44,16 @@ public class BoardRepository {
         Query query = em.createNativeQuery(q, Board.class);
         query.setParameter(1,id);
         return (Board) query.getSingleResult();
+    }
+    @Transactional
+    public void deleteById(int id){
+        String q = """
+                DELETE FROM board_tb
+                WHERE id =?
+                """;
+        Query query = em.createNativeQuery(q);
+        query.setParameter(1,id);
+
+        query.executeUpdate();
     }
 }

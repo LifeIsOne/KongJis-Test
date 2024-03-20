@@ -30,6 +30,12 @@ public class BoardController {
         return "index";
     }
 
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable int id){
+        br.deleteById(id);
+        return "redirect:/";
+    }
+
     @GetMapping("/board/save-form")
     public String saveForm() {
         return "board/save-form";

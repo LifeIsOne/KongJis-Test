@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 public class BoardRepositoryTest {
 
-    private BoardRepository boardRepository;
+    private BoardRepository br;
 
     @Test
     public void selectById_test(){
@@ -12,9 +12,21 @@ public class BoardRepositoryTest {
         int id = 1;
 
         // when
-        Board board = boardRepository.selectById(id);
+        Board board = br.selectById(id);
 
         // then
         System.out.println(board);
+    }
+
+    @Test
+    public void deleteById_test(){
+        // given
+        int id = 1;
+
+        // when
+        br.deleteById(id);
+
+        // then
+
     }
 }
