@@ -29,9 +29,18 @@ public class BoardRepository {
         String q = """
                 SELECT * FROM board_tb
                 """;
-        Query query = em.createNativeQuery(q,Board.class);
+        Query query = em.createNativeQuery(q, Board.class);
 
         return query.getResultList();
     }
 
+    public Board selectById(int id) {
+        String q = """
+                SELECT * FROM board_tb
+                WHERE id = ?
+                """;
+        Query query = em.createNativeQuery(q, Board.class);
+        query.setParameter(1,id);
+        return (Board) query.getSingleResult();
+    }
 }
